@@ -26,7 +26,7 @@ pipeline {
 
         stage('SonarQube') {
            steps{
-                  sh 'mvn sonar:sonar -Dsonar.projectKey=Ms-Maven -Dsonar.host.url=http://localhost:9000 -Dsonar.login=f02ea950a916c2196fb81575fbf270b425148f15'
+                  sh 'mvn sonar:sonar -Dsonar.projectKey=Ms-Maven -Dsonar.host.url=http://172.18.0.3:9000 -Dsonar.login=f02ea950a916c2196fb81575fbf270b425148f15'
             } 
         }
 
