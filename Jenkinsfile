@@ -5,7 +5,7 @@ pipeline {
         maven 'Maven'
     }
     stages {
-      stage ('Initial') {
+      stage ('Inicio') {
             steps {
               sh '''
                    echo "PATH = ${PATH}"
@@ -13,12 +13,12 @@ pipeline {
                '''
             }
         }
-        stage ('Complicacion') {
+        stage ('Compilacion') {
             steps {
                  sh 'mvn clean compile -e'
             }
         }
-        stage ('Test') {
+        stage ('El-Test') {
             steps {
                  sh 'mvn clean test -e'
             }
@@ -37,7 +37,7 @@ pipeline {
 
         stage ('SCA') {
             steps {
-                 sh 'mvn org.owasp:dependency-check-maven:check'
+                sh 'mvn org.owasp:dependency-check-maven:check'
                 dependencyCheckPublisher failedNewCritical: 5, failedTotalCritical: 10, pattern: 'terget/dad.xml', unstableNewCritical: 3, unstableTotalCritical: 5
             }
         }
