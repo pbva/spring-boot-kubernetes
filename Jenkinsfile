@@ -44,7 +44,7 @@ pipeline {
             }
         }
         
-        stage('ZAP'){
+        stage('DAST - ZAP'){
         steps{
             script{
                 env.DOCKER = tool "Docker"
