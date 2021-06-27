@@ -62,7 +62,7 @@ pipeline {
                     }  
                     echo currentBuild.result 
                     echo "Generacion de Reporte"
-                    sh "docker exec zap zap-cli --verbose report -o /zap/reports/owasp-quick-scan-report.html --output-format html"
+                    sh "docker exec zap zap-cli --verbose report -o /var/jenkins_home/workspace/Final_master/owasp-quick-scan-report.html --output-format html"
                     publishHTML target: [
                         allowMissing: false,
                         alwaysLinkToLastBuild: false,
