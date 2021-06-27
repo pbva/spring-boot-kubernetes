@@ -57,7 +57,7 @@ pipeline {
         				                env.DOCKER_EXEC = "${DOCKER}/bin/docker"
         				             
                                         sh '''
-                                            ${DOCKER_EXEC} run --rm -v $(pwd):/root/.cache/ aquasec/trivy python:3.4-alpine
+                                            ${DOCKER_EXEC} run --rm -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy python:3.4-alpine
                                         '''
                                        
                                          sh '${DOCKER_EXEC} rmi aquasec/trivy'
