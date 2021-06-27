@@ -47,10 +47,9 @@ pipeline {
         			    //figlet 'Owasp Zap DAST'
         				script{
         				    env.DOCKER = tool 'Docker'
-                            //env.DOCKER_EXEC = '${DOCKER}/bin/docker'
-        				    env.DOCKER_EXEC = '${DOCKER}/docker/bin'
+                            env.DOCKER_EXEC = "${DOCKER}/bin/docker"
         				    env.TARGET = 'http://zero.webappsecurity.com'
-        				   echo "PATH = ${DOCKER}"
+        				    echo "${DOCKER}"
         				    
         				    //sh '${DOCKER_EXEC} rm -f zap2'
         				    sh '${DOCKER_EXEC} pull owasp/zap2docker-stable'
