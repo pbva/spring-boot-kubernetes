@@ -58,7 +58,28 @@ pipeline {
         
     }
     
-        
+        post { 
+        always {
+            script {
+                def COLOR_MAP = [
+                    'SUCCESS': 'good', 
+                    'FAILURE': 'danger',
+                ]
+                
+            }
+            publishHTML([
+        				    allowMissing: false,
+        				    alwaysLinkToLastBuild: false,
+        				    keepAll: false,
+        				    reportDir: '/var/jenkins_home/tools',
+        				    reportFiles: 'zap_baseline_report2.html',
+        				    reportName: 'HTML Report',
+        				    reportTitles: ''])
+            
+            /*slackSend channel: 'notificacion-jenkins',
+                color: 'danger',
+                message: "Se ha terminado una ejecucion del pipeline."*/
+        }
 
     }
 }
