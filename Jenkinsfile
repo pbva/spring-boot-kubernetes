@@ -50,7 +50,7 @@ pipeline {
                                 env.DOCKER_EXEC = "${DOCKER}/bin/docker"
                                 echo "${DOCKER_EXEC}"
                                 //elimina imagne docker zap2
-                                sh "${DOCKER_EXEC} rm -f zap2"
+                                //sh "${DOCKER_EXEC} rm -f zap2"
                                 // descraga la version estable de zap
                                 sh "${DOCKER_EXEC} pull owasp/zap2docker-stable"
                                 //Levantar el zap en modo escuche
