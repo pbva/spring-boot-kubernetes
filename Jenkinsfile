@@ -46,7 +46,7 @@ pipeline {
         			steps{
         			    //figlet 'Owasp Zap DAST'
         				script{
-        				    env.DOCKER = tool "Docker"
+        				    env.DOCKER = tool 'Docker'
         				    env.DOCKER_EXEC = "${DOCKER}/bin/docker"
         				    env.TARGET = 'http://zero.webappsecurity.com'
         				   
