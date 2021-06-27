@@ -44,22 +44,33 @@ pipeline {
             }
         }
         
-        stage('DAST - ZAP'){
-        steps{
-            script{
-                //Variables Docker
-                env.DOCKER = tool "Docker"
-                env.DOCKER_EXEC = "${DOCKER}/bin/docker"
-                echo "${DOCKER_EXEC}"
-                //elimina imagne docker zap2
-                //sh "${DOCKER_EXEC} rm -f zap2"
-                // descraga la version estable de zap
-                sh "${DOCKER_EXEC} pull owasp/zap2docker-stable"
-                //Levantar el zap en modo escuche
-                sh '''${DOCKER_EXEC} run --add-host="localhost:127.0.0.1" --rm -e LC_ALL=C.UTF-8 -e LANG=C.UTF-8 --name zap2 -u zap -p 8090:8080 -d owasp/zap2docker-stable zap.sh -daemon -port 8080 -host 0.0.0.0 -config api.disablekey=true'''
-                // ahora ejejcutamos el scan
-                sh '''${DOCKER_EXEC} run --add-host="localhost:127.0.0.1" -v /opt/dast/reports:/zap/reports/:rw --rm -i owasp/zap2docker-stable zap-full-scan.py -t "http://zero.webappsecurity.com" -I -r zap_baseline_report2.html -l PASS'''
-            }
+               stage('DAST') {
+            steps {
+                script {
+                    try {
+                        echo "Inicio de Scanneo Dinamico"
+                        sh "docker exec zap zap-cli --verbose quick-scan http://pipeline.ironbox.com.ar:8090 -l Medium" 
+                        //sh "docker exec zap zap-cli --verbose alerts --alert-level Medium -f json | jq length"
+                        currentBuild.result = 'SUCCESS' 
+                    }
+                    catch (Exception e) {
+                            //echo e.getMessage() 
+                            //currentBuild.result = 'FAILURE'
+                            println ("Revisar Reporte ZAP. Se encontraron Vulnerabilidades.")
+
+                        }
+                    }  
+                    echo currentBuild.result 
+                    echo "Generacion de Reporte"
+                    sh "docker exec zap zap-cli --verbose report -o /zap/reports/owasp-quick-scan-report.html --output-format html"
+                    publishHTML target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: '/opt/dast/reports',
+                        reportFiles: 'owasp-quick-scan-report.html',
+                        reportName: 'Analisis DAST'
+                      ]          
             }
         }
         
