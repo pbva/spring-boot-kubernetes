@@ -47,7 +47,7 @@ pipeline {
         			    //figlet 'Owasp Zap DAST'
         				script{
         				    env.DOCKER = tool 'Docker'
-                            env.DOCKER_EXEC = "${DOCKER}/bin/"
+                            env.DOCKER_EXEC = "${DOCKER}/bin/docker"
         				    env.TARGET = 'http://zero.webappsecurity.com'
         				    echo "${DOCKER}"
         				    
@@ -65,7 +65,7 @@ pipeline {
                     			    //figlet 'Scan Docker'
                     		        script{
                     		            env.DOCKER = tool 'Docker'
-        				                env.DOCKER_EXEC = "${DOCKER}/bin/docker"
+        				                env.DOCKER_EXEC = "${DOCKER}/bin/"
         				             
                                         sh '''
                                             ${DOCKER_EXEC} run --rm -v $(pwd):/root/.cache/ aquasec/trivy python:3.4-alpine
